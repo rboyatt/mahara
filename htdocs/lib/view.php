@@ -359,7 +359,7 @@ class View {
         $user = new User();
         $user->find_by_id($userid);
 
-        db_begin();
+        db_begin('READ COMMITTED');
 
         $template = new View($templateid);
 

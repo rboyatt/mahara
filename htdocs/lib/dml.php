@@ -1518,10 +1518,13 @@ $GLOBALS['_TRANSACTION_LEVEL'] = 0;
  * This function starts a smart transaction
  *
  */
-function db_begin() {
+function db_begin($transactionlevel) {
     global $db;
 
     $GLOBALS['_TRANSACTION_LEVEL']++;
+    if($transactionmode) {
+      $db->SetTransactionMode($transactionmode);
+    }
     $db->StartTrans();
 }
 

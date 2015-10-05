@@ -753,7 +753,14 @@ class View {
         }
 
         if (isset($this->columnsperrow)) {
-            delete_records('view_rows_columns', 'view', $this->get('id'));
+            $vrc = get_column('view_rows_columns', 'id', 'view', $this->get('id'));
+
+            foreach($vrc as $v) {
+              delete_records('view_rows_columns', 'id', $v);
+            }
+
+            //delete_records('view_rows_columns', 'view', $this->get('id'));
+
             foreach ($this->get_columnsperrow() as $viewrow) {
                 insert_record('view_rows_columns', (object)array( 'view' => $this->get('id'), 'row' => $viewrow->row, 'columns' => $viewrow->columns));
             }

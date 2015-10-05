@@ -1214,7 +1214,13 @@ class BlockInstance {
         // in it, regardless of the user's current permissions.
         $old = get_records_assoc('view_artefact', 'block', $this->id, '', 'artefact, id');
 
-        delete_records('view_artefact', 'block', $this->id);
+        $va = get_column('view_artefact', 'id', 'block', $this->id);
+        foreach($va as $v) {
+          delete_records('view_artefact', 'id', $v);
+        }
+
+        //delete_records('view_artefact', 'block', $this->id);
+
         safe_require('blocktype', blocktype_name_to_namespaced($this->get('blocktype')));
         if (!$artefacts = call_static_method(
             generate_class_name('blocktype', $this->get('blocktype')),
